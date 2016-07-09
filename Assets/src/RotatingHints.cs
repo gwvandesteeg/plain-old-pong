@@ -30,7 +30,7 @@ using UnityEngine.Assertions;
 using System.Collections;
 
 /**
- * A rotating hints behaviour script
+ * A rotating hints behaviour class
  * 
  * This takes a list of hint strings, and slowly updates a UnityEngine.UI.Text
  * field and replaces the content prefixed with the string "Hint: ".  The
@@ -40,15 +40,40 @@ using System.Collections;
  * @author	Gerwin van de Steeg
  * @see		UnityEngine.UI
  *
- */
+  */
 public class RotatingHints : MonoBehaviour {
+	/**
+	 * The hints to display
+	 */
 	public string[] hints;
+	/**
+	 * The time interval in seconds before changing the displayed
+	 * hint to the next value.
+	 */
 	public float timeInterval = 15;
+	/**
+	 * The time the hint was last changed since the start of the
+	 * GameObject creation.
+	 */
 	private float lastUpdate;
+	/**
+	 * index counter into the hints list
+	 */
 	private int index = 0;
+	/**
+	 * The UnityEngine.UI.Text object we will be manipulating
+	 */
 	private Text textField;
 
-	// Use this for initialization
+	/**
+	 * Start method called upon when the GameObject this script
+	 * is attached to becomes Active for the first time
+	 *
+	 * This method initialises the private variables we care about
+	 * and does a couple of Assertions to ensure we are configured
+	 * correctly.
+	 * 
+	 */
 	void Start () {
 		// initialise the last updated timestamp
 		lastUpdate = Time.time;
@@ -56,23 +81,22 @@ public class RotatingHints : MonoBehaviour {
 		textField = gameObject.GetComponent<Text> ();
 		Assert.IsNotNull (textField, "No text field component");
 		Assert.IsTrue (hints.Length > 0,  "No hints configured");
+		Assert.IsNull (hints.Length >= index, "Initial index too large");
 	}
 	
-	// Update is called once per frame
+	/**
+	 * Every fixed framerate frame we check whether or not we need
+	 * to update the Hint being displayed.
+	 * 
+	 */
 	void FixedUpdate () {
-		// disable hints if no hints exist
-		if (hints.Length > 0) {
-			gameObject.SetActive (true);
-			float now = Time.time;
-			float diff = now - lastUpdate;
-			if (diff > timeInterval) {
-				lastUpdate = now;
-				// use modulo to ensure we stay inside the hints length
-				textField.text = "Hint: " + hints [index % hints.Length].ToString ();
-				index++;
-			}
-		} else {
-			gameObject.SetActive (false);
+		float now = Time.time;
+		float diff = now - lastUpdate;
+		if (diff > timeInterval) {
+			lastUpdate = now;
+			// use modulo to ensure we stay inside the hints length
+			textField.text = "Hint: " + hints [index % hints.Length].ToString ();
+			index++;
 		}
 	}
 }
