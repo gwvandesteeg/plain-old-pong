@@ -40,7 +40,7 @@ using System.Collections;
  * @see		UnityEngine.UI
  *
  */
-public class ExitGameScript : MonoBehaviour {
+public class ExitGameButtonScript : MonoBehaviour {
 	/**
 	 * The button we are attached to
 	 */
