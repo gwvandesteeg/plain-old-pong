@@ -50,7 +50,7 @@ public class RotatingHints : MonoBehaviour {
 	 * The time interval in seconds before changing the displayed
 	 * hint to the next value.
 	 */
-	public float timeInterval = 15;
+	public float timeInterval = 5;
 	/**
 	 * The time the hint was last changed since the start of the
 	 * GameObject creation.
@@ -79,9 +79,11 @@ public class RotatingHints : MonoBehaviour {
 		lastUpdate = Time.time;
 		// get the textField we want
 		textField = gameObject.GetComponent<Text> ();
-		Assert.IsNotNull (textField, "No text field component");
+		// cannot use IsNotNull due to the nature of Unity.Object
+		// see: https://community.unity.com/t5/Scripting/Fun-with-null/m-p/1113758
+		Assert.IsFalse (textField == null || textField.Equals(null), "No text field component");
 		Assert.IsTrue (hints.Length > 0,  "No hints configured");
-		Assert.IsNull (hints.Length >= index, "Initial index too large");
+		Assert.IsTrue (hints.Length >= index, "Initial index too large");
 	}
 	
 	/**
@@ -100,3 +102,4 @@ public class RotatingHints : MonoBehaviour {
 		}
 	}
 }
+
