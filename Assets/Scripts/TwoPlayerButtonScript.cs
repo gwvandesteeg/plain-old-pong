@@ -73,7 +73,7 @@ public class TwoPlayerButtonScript : MonoBehaviour {
 			// TODO
 			GameConfiguration.singleton.TwoPlayerGame();
 			// Load the next Scene
-			//SceneManager.LoadScene("");
+			SceneManager.LoadScene("GameScreen");
 		});
 	}
 }

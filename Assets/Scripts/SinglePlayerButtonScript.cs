@@ -73,7 +73,7 @@ public class SinglePlayerButtonScript : MonoBehaviour {
 			// TODO
 			GameConfiguration.singleton.SinglePlayerGame();
 			// Load the next Scene
-			//SceneManager.LoadScene("");
+			SceneManager.LoadScene("GameScreen");
 		});
 	}
 }
