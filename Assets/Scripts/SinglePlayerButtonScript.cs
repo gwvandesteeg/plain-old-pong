@@ -26,6 +26,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Assertions;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 /**
@@ -70,7 +71,9 @@ public class SinglePlayerButtonScript : MonoBehaviour {
 			Debug.Log("Single Player");
 
 			// TODO
-			Assert.IsFalse(false, "Needs to be implemented");
+			GameConfiguration.singleton.SinglePlayerGame();
+			// Load the next Scene
+			//SceneManager.LoadScene("");
 		});
 	}
 }

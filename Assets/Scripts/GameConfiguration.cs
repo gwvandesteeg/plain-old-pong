@@ -24,57 +24,75 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.Assertions;
-using UnityEngine.SceneManagement;
 using System.Collections;
 
 /**
- * A handler for the exit game button
+ * A Game configuration singleton
  * 
- * Here we configure the action to take when the Exit game button is clicked,
- * since we cannot link button actions to singletons and have the mapping
- * retain through scene loads, we work around the problem by adding the
- * method every time on the Awake method.
+ * Here we store the state for dealing with what kind of game we
+ * are going to be playing.
  * 
  * @author	Gerwin van de Steeg
- * @see		UnityEngine.UI
  *
  */
-public class TwoPlayerButtonScript : MonoBehaviour {
+
+public class GameConfiguration : MonoBehaviour {
 	/**
-	 * The button we are attached to
+	 * Definition of the singleton
 	 */
-	private Button myButton;
+	public static GameConfiguration singleton = null;
+	//! Whether player one is controlled by an AI or not.
+	public bool playerOneAI = false;
+	//! Whether player two is controlled by an AI or not.
+	public bool playerTwoAI = false;
 
 	/**
 	 * Awake method called upon when the GameObject this script
 	 * is attached to is created
 	 *
-	 * This method initialises the private variable we care about,
-	 * does a couple of Assertions to ensure we are configured
-	 * correctly and then attaches our function to the onClick
-	 * listener.
+	 * This method initialises the singleton if it does not
+	 * already exists, and deals with the logic to ensure it
+	 * does not get destroyed on scene changes.
 	 * 
 	 */
 	void Awake () {
-		myButton = GetComponent<Button> ();
-		// cannot use IsNotNull due to the nature of Unity.Object
-		// see: https://community.unity.com/t5/Scripting/Fun-with-null/m-p/1113758
-		Assert.IsFalse (myButton == null || myButton.Equals(null), "Not attached to a Button");
-		// remove all existing onClick listeners
-		myButton.onClick.RemoveAllListeners();
-		// add our own listener using a callback
-		myButton.onClick.AddListener (() => {
-			// could send to a game manager or our own implemented onClick method
-			// attached here, but lets just call the quit method
-			Debug.Log("Two Player");
+		// if the singleton doesn't exist, set ourselves to the
+		// singleton
+		if (singleton == null) {
+			singleton = this;
+		} else {
+			// if the singleton isn't us, then destroy ourselves
+			if (singleton != this) {
+				Destroy(gameObject);
+			}
+		}
+		// ensure we don't get destroyed between Scene changes
+		DontDestroyOnLoad (gameObject);
+	}
 
-			// TODO
-			GameConfiguration.singleton.TwoPlayerGame();
-			// Load the next Scene
-			//SceneManager.LoadScene("");
-		});
+	/**
+	 * Setup the game for a Single Player, where player two is
+	 * controlled by an AI
+	 */
+	public void SinglePlayerGame() {
+		playerOneAI = false;
+		playerTwoAI = true;
+	}
+
+	/**
+	 * Setup the game for Two Players
+	 */
+	public void TwoPlayerGame() {
+		playerOneAI = false;
+		playerTwoAI = false;
+	}
+
+	/**
+	 * Setup the game for zero human Players, where both 
+	 * players are controlled by an AI
+	 */
+	public void ZeroPlayerGame() {
+		playerOneAI = true;
+		playerTwoAI = true;
 	}
 }
-

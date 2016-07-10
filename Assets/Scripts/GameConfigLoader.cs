@@ -24,57 +24,35 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.Assertions;
-using UnityEngine.SceneManagement;
 using System.Collections;
 
 /**
- * A handler for the exit game button
+ * A Game Configuration Loader
  * 
- * Here we configure the action to take when the Exit game button is clicked,
- * since we cannot link button actions to singletons and have the mapping
- * retain through scene loads, we work around the problem by adding the
- * method every time on the Awake method.
+ * Here we ensure that the GameConfiguration object exist.  By attaching this
+ * script to the MainCamera we will always ensure that the GameConfiguration
+ * object exists.
  * 
  * @author	Gerwin van de Steeg
- * @see		UnityEngine.UI
  *
+ * @see: https://unity3d.com/learn/tutorials/projects/2d-roguelike-tutorial/writing-game-manager
  */
-public class TwoPlayerButtonScript : MonoBehaviour {
-	/**
-	 * The button we are attached to
-	 */
-	private Button myButton;
+
+public class GameConfigLoader : MonoBehaviour {
+	public GameObject gameConfiguration;
 
 	/**
 	 * Awake method called upon when the GameObject this script
 	 * is attached to is created
 	 *
-	 * This method initialises the private variable we care about,
-	 * does a couple of Assertions to ensure we are configured
-	 * correctly and then attaches our function to the onClick
-	 * listener.
+	 * This method initialises the singleton if it does not
+	 * already exists.
 	 * 
 	 */
 	void Awake () {
-		myButton = GetComponent<Button> ();
-		// cannot use IsNotNull due to the nature of Unity.Object
-		// see: https://community.unity.com/t5/Scripting/Fun-with-null/m-p/1113758
-		Assert.IsFalse (myButton == null || myButton.Equals(null), "Not attached to a Button");
-		// remove all existing onClick listeners
-		myButton.onClick.RemoveAllListeners();
-		// add our own listener using a callback
-		myButton.onClick.AddListener (() => {
-			// could send to a game manager or our own implemented onClick method
-			// attached here, but lets just call the quit method
-			Debug.Log("Two Player");
-
-			// TODO
-			GameConfiguration.singleton.TwoPlayerGame();
-			// Load the next Scene
-			//SceneManager.LoadScene("");
-		});
+		// if we don't exist, instantiate
+		if (GameConfiguration.singleton == null) {
+			Instantiate (gameConfiguration);
+		}
 	}
 }
-
