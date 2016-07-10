@@ -67,7 +67,7 @@ public class TwoPlayerButtonScript : MonoBehaviour {
 		myButton.onClick.AddListener (() => {
 			// could send to a game manager or our own implemented onClick method
 			// attached here, but lets just call the quit method
-			Debug.Log("Single Player");
+			Debug.Log("Two Player");
 
 			// TODO
 			Assert.IsFalse(false, "Needs to be implemented");
