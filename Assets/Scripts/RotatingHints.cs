@@ -85,7 +85,7 @@ namespace PaddleGame {
 				// use modulo to ensure we stay inside the hints length
 				textField.text = "Hint: " + hints [index % hints.Length].ToString ();
 				// ensure we won't run out of integers
-				index = (index + 1) % hints.Length
+				index = (index + 1) % hints.Length;
 			}
 		}
 	}
