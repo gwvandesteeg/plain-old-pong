@@ -5,7 +5,7 @@
  * This program is free software, distributed under the
  * BSD 2 Clause license, see the LICENSE file at the
  * top of the source tree for a full copy of the license.
-s * 
+ * 
  */
 using UnityEngine;
 using UnityEngine.Assertions;
