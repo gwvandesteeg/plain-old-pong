@@ -1,5 +1,5 @@
 # Plain Old Pong
-This project ss a first attempt to create a game using Unity using 3D
+This project is a first attempt to create a game using Unity using 3D
 objects whilst giving the game the look and feel of a 2D game.  The
 game supports both a single player and two-player aspect.
 
@@ -28,5 +28,6 @@ recommended NUnit testing system.
 
 ## Integration tests
 Where feasible integration tests for code will be provided using the
-Unity Test Tools asset from the Unity asset store.
+Unity Test Tools asset from the Unity asset store.  Code from this is
+released under its own license and will be noted as such.
 
