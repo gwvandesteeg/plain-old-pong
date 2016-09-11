@@ -53,11 +53,11 @@ namespace PaddleGame {
 		void OnCollisionEnter(Collision collision) {
 			// check it's a paddle
 			if (collision.gameObject.CompareTag ("Paddle")) {
-				Debug.Log ("Collided with a paddle");
+				//Debug.Log ("Collided with a paddle");
 				float now = Time.time;
 				// check time interval
 				if (now - lastSpeedIncrease > GameConfiguration.singleton.timeInterval) {
-					Debug.Log ("Accelerating ball");
+					//Debug.Log ("Accelerating ball");
 					lastSpeedIncrease = now;
 					// accellerate ourselves
 					rbody.velocity = rbody.velocity * GameConfiguration.singleton.accelerationFactor;

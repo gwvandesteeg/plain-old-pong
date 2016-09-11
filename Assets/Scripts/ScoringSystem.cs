@@ -22,31 +22,32 @@ namespace PaddleGame {
 	 * @author	Gerwin van de Steeg
 	 *
 	 */
-	public class ScoringSystem : MonoBehaviour {
-		//! Player One's current score
-		public int playerOneScore = 0;
-		//! Player One's score UI element
-		public Text playerOneScoreText;
-		//! Player Two's current score
-		public int playerTwoScore = 0;
-		//! Player Two's score UI element
-		public Text playerTwoScoreText;
+	public class ScoringSystem : IScoringSystem {
+
+		//! player one score display instance
+		private IPlayerScoreDisplay<int> playerOneDisplay;
+		//! player one score tracker instance
+		private IPlayerScore<int> playerOneScore;
+		//! player two score display instance
+		private IPlayerScoreDisplay<int> playerTwoDisplay;
+		//! player two score tracker instance
+		private IPlayerScore<int> playerTwoScore;
+
 
 		/**
-		 * Awake method called upon when the GameObject this script
-		 * is attached to is created
+		 * Constructor
 		 *
-		 * Ensures our UI elements exist and we configure ourself
-		 * onto the GameConfiguration singleton
-		 * 
+		 * @param {Text} displayOne the UI element used to display the score for Player One
+		 * @param {Text} displayTwo the UI element used to display the score for Player Two
+		 *
 		 */
-		void Awake () {
-			// ensure we're configured
-			Assert.IsFalse (playerOneScoreText == null || playerOneScoreText.Equals (null), "Player One Score display text field not set");
-			Assert.IsFalse (playerTwoScoreText == null || playerTwoScoreText.Equals (null), "Player Two Score display text field not set");
-			Assert.IsFalse (GameConfiguration.singleton == null || GameConfiguration.singleton.Equals (null), "GameConfiguration object does not exist");
-			// set the scoring system
-			GameConfiguration.singleton.setScoringSystem (this);
+		public ScoringSystem(Text displayOne, Text displayTwo)
+		{
+			playerOneDisplay = new PlayerScoreDisplay(displayOne);
+			playerOneScore = new PlayerScore();
+
+			playerTwoDisplay = new PlayerScoreDisplay(displayTwo);
+			playerTwoScore = new PlayerScore();
 		}
 
 		/**
@@ -54,7 +55,7 @@ namespace PaddleGame {
 		 * the current score for player One
 		 */
 		public void UpdatePlayerOneScoreDisplay() {
-			playerOneScoreText.text = playerOneScore.ToString ();
+			playerOneDisplay.UpdateDisplay(playerOneScore.score);
 		}
 
 		/**
@@ -62,7 +63,7 @@ namespace PaddleGame {
 		 * the current score for player Two
 		 */
 		public void UpdatePlayerTwoScoreDisplay() {
-			playerTwoScoreText.text = playerTwoScore.ToString ();
+			playerTwoDisplay.UpdateDisplay(playerTwoScore.score);
 		}
 
 		/**
@@ -78,16 +79,18 @@ namespace PaddleGame {
 		 * Player One scored method, increases the player one score
 		 */
 		public void ScorePlayerOne() {
-			Debug.Log ("Increasing player one score");
-			playerOneScore++;
+			//Debug.Log ("Increasing player one score");
+			playerOneScore.Score();
+			UpdatePlayerOneScoreDisplay ();
 		}
 
 		/**
 		 * Player Two scored method, increases the player two score
 		 */
 		public void ScorePlayerTwo() {
-			Debug.Log ("Increasing player two score");
-			playerTwoScore++;
+			//Debug.Log ("Increasing player two score");
+			playerTwoScore.Score();
+			UpdatePlayerTwoScoreDisplay ();
 		}
 
 		/**
@@ -95,8 +98,8 @@ namespace PaddleGame {
 		 * updates all scoring display
 		 */
 		public void Reset() {
-			playerOneScore = 0;
-			playerTwoScore = 0;
+			playerOneScore.Reset();
+			playerTwoScore.Reset();
 			UpdateScoreDisplay ();
 		}
 	}
