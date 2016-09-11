@@ -16,18 +16,47 @@ namespace PaddleGame {
 	 * input provider system we want.
 	 * 
 	 * Based off of the concept provided at:
-	 * https://github.com/DmytroMindra/GrowingGamesGuidedByTests
+	 * @see {@link https://github.com/DmytroMindra/GrowingGamesGuidedByTests|GrowingGamesGuidedByTests}
 	 * 
 	 * @author	Gerwin van de Steeg
 	 * 
 	 */
 	public interface IUserInputProvider {
-		//! provide a means to access the movement Axis
+		/**
+		 * Access the named movement Axis
+		 *
+		 * @param {string} axisName
+		 * @returns {float}
+		 * @see {@link UnityEngine.Input.GetAxis}
+		 *
+		 */
 		float GetAxis (string axisName);
-		//! provide a means toa access a configure input button
+		/**
+		 * Access the named button
+		 *
+		 * @param {string} buttonName
+		 * @returns {bool}
+		 * @see {@link UnityEngine.Input.GetButton}
+		 *
+		 */
 		bool GetButton(string buttonName);
-		//! provide a means to access a specific key
+		/**
+		 * Access the named key
+		 *
+		 * @param {string} keyName
+		 * @returns {bool}
+		 * @see {@link UnityEngine.Input.GetKeyDown}
+		 *
+		 */
 		bool GetKeyDown (string keyName);
+		/**
+		 * Access the named key by KeyCode
+		 *
+		 * @param {KeyCode} keyCode
+		 * @returns {bool}
+		 * @see {@link UnityEngine.Input.GetKeyDown}
+		 *
+		 */
 		bool GetKeyDown (KeyCode keyCode);
 	}
 }

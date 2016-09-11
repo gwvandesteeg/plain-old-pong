@@ -22,7 +22,9 @@ namespace PaddleGame {
 	 * @see PlayerOnePaddleControl where this code is an almost identical copy
 	 *
 	 */
-	public class PlayerTwoPaddleControl : MonoBehaviour {
+	public class PlayerTwoPaddleControl : MonoBehaviour, IUserInput {
+		//! the Input proxy
+		public IUserInputProvider InputProvider { get; set;}
 		//! the paddle prefab
 		private GameObject paddlePrefab;
 		//! the instantiated paddle object
@@ -111,7 +113,7 @@ namespace PaddleGame {
 		 */
 		void Update () {
 			// determine velocity
-			Vector3 velocity = new Vector3 (0f, Input.GetAxis (upDown) * GameConfiguration.singleton.maxPaddleSpeed, 0f);
+			Vector3 velocity = new Vector3 (0f, InputProvider.GetAxis (upDown) * GameConfiguration.singleton.maxPaddleSpeed, 0f);
 			// set the Rigidbody velocity
 			rbody.velocity = velocity;
 		}

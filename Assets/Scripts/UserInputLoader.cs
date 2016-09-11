@@ -8,7 +8,6 @@
  * 
  */
 using UnityEngine;
-using UnityEngine.Assertions;
 using System.Collections;
 using System.Linq;
 
@@ -16,27 +15,43 @@ namespace PaddleGame {
 
 	/**
 	 * Script to load the Real User Input object
-	 * to be able to play the game
+	 * to be able to play the game, needs to be
+	 * attached to the root component of the game
+	 * itself, or at least the root component for
+	 * all other components that require UserInput.
 	 * 
 	 * Based off of the concept provided at:
-	 * https://github.com/DmytroMindra/GrowingGamesGuidedByTests
+	 * @see {@link https://github.com/DmytroMindra/GrowingGamesGuidedByTests|GrowingGamesGuidedByTests}
 	 * 
 	 * @author	Gerwin van de Steeg
 	 *
 	 */
 	public class UserInputLoader : MonoBehaviour {
 
-		// Use this for initialization
+		/**
+		 * Upon this object becoming active find all child
+		 * objects which implement the IUserInput interface
+		 * and set them to use the InterfaceProvider we
+		 * have instantiated.
+		 *
+		 */
 		void Start () {
 			InitializeUserInput();
 		}
 
-		void InitializeUserInput ()
+		/**
+		 * Find all child objects which implement the
+		 * IUserInput interface and set them to use
+		 * the InterfaceProvider we have instantiated.
+		 *
+		 */
+		public void InitializeUserInput ()
 		{
 			IUserInputProvider input = new RealUserInputProvider ();
 			var components = this.GetComponentsInChildren<MonoBehaviour> ().Where (c => c is IUserInput).Cast<IUserInput> ();
-			foreach (var component in components)
+			foreach (var component in components) {
 				component.InputProvider = input;
+			}
 		}
 	}
 }

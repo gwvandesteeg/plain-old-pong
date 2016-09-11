@@ -17,7 +17,7 @@ namespace PaddleGame {
 	 * User Input provider Implementation for real user input
 	 * 
 	 * Based off of the concept provided at:
-	 * https://github.com/DmytroMindra/GrowingGamesGuidedByTests
+	 * @see {@link https://github.com/DmytroMindra/GrowingGamesGuidedByTests|GrowingGamesGuidedByTests}
 	 * 
 	 * @author	Gerwin van de Steeg
 	 *
@@ -28,6 +28,7 @@ namespace PaddleGame {
 		 * 
 		 * @param {string} axisName
 		 * @returns {float}
+		 * @see {@link UnityEngine.Input.GetAxis}
 		 * 
 		 */
 		public float GetAxis (string axisName){
@@ -38,6 +39,7 @@ namespace PaddleGame {
 		 * 
 		 * @param {string} buttonName
 		 * @returns {bool}
+		 * @see {@link UnityEngine.Input.GetButton}
 		 * 
 		 */
 		public bool GetButton(string buttonName) {
@@ -49,6 +51,7 @@ namespace PaddleGame {
 		 * 
 		 * @param {string} keyName
 		 * @returns {bool}
+		 * @see {@link UnityEngine.Input.GetKeyDown}
 		 * 
 		 */
 		public bool GetKeyDown(string keyName) {
@@ -60,6 +63,7 @@ namespace PaddleGame {
 		 * 
 		 * @param {KeyCode} keyCode
 		 * @returns {bool}
+		 * @see {@link UnityEngine.Input.GetKeyDown}
 		 * 
 		 */
 		public bool GetKeyDown(KeyCode keyCode) {

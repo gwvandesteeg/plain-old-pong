@@ -14,7 +14,7 @@ namespace PaddleGame {
 	 * input provider system we want.
 	 * 
 	 * Based off of the concept provided at:
-	 * https://github.com/DmytroMindra/GrowingGamesGuidedByTests
+	 * @see {@link https://github.com/DmytroMindra/GrowingGamesGuidedByTests|GrowingGamesGuidedByTests}
 	 * 
 	 * @author	Gerwin van de Steeg
 	 * 
