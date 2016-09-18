@@ -8,26 +8,29 @@
  * 
  */
 using UnityEngine;
+using UnityEngine.Assertions;
 using System.Collections;
 
 namespace PaddleGame {
+
 	/**
-	 * Quick and dirty class to give the paddle a shove in a
-	 * specific direction used in Testing paddle interaction
-	 * behaviour
+	 * Interface definition for the exposition of the ScoringSystem
 	 *
 	 * @author	Gerwin van de Steeg
 	 *
 	 */
-	public class PaddleAcceleration : MonoBehaviour {
-
-		public float x = 0f;
-		public float y = 0f;
-		public float z = 0f;
-
-		void Start () {
-			Rigidbody rbody = GetComponent<Rigidbody>();
-			rbody.velocity = new Vector3(x,y,z);
-		}
+	public interface IScoringSystem {
+		/**
+		 * Reset the scoring system
+		 */
+		void Reset();
+		/**
+		 * Increment the score for player one
+		 */
+		void ScorePlayerOne();
+		/**
+		 * Increment the score for player two
+		 */
+		void ScorePlayerTwo();
 	}
 }
