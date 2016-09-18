@@ -46,7 +46,8 @@ namespace PaddleGame {
 		//! The selected ball
 		public int chosenBall = 0;
 		//! the scoring system instantiated, should start off as null
-		public ScoringSystem scoringSystem = null;
+		private IScoringSystem _scoringSystem = null;
+		public IScoringSystem scoringSystem { get { return _scoringSystem; } set { _scoringSystem = value; }}
 		//! the maximum paddle speed
 		public float maxPaddleSpeed = 150f;
 		/**
@@ -120,11 +121,7 @@ namespace PaddleGame {
 		 *
 		 */
 		private void ResetScoringSystem () {
-			if (scoringSystem == null || scoringSystem.Equals (null)) {
-				// do nothing, we want it to be null
-			}
-			else {
-				Destroy (scoringSystem);
+			if (scoringSystem != null) {
 				scoringSystem = null;
 			}
 		}
@@ -135,8 +132,8 @@ namespace PaddleGame {
 		 * @param {ScoringSystem} scoringObject
 		 *
 		 */
-		public void setScoringSystem(ScoringSystem scoringObject) {
-			Assert.IsTrue (scoringSystem == null || scoringSystem.Equals (null), "Scoring System object isn't null");
+		public void setScoringSystem(IScoringSystem scoringObject) {
+			Assert.IsTrue (scoringSystem == null, "Scoring System object isn't null");
 			scoringSystem = scoringObject;
 		}
 

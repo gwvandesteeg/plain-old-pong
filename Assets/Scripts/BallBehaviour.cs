@@ -81,7 +81,17 @@ namespace PaddleGame {
 			// if no ball, create
 			if (ballInstance == null || ballInstance.Equals (null)) {
 				// ball destroyed, need to create a new one
-				CreateBall();
+				CreateBall ();
+			} else {
+				// check the ball is inside the camera
+				MeshRenderer rend = ballInstance.GetComponent<MeshRenderer> ();
+				// if its outside the camera it is a foul ball, and the ball will be destroyed and reset
+				Assert.IsFalse(rend == null || rend.Equals(null), "No MeshRenderer on the ball");
+				if (!rend.isVisible) {
+					Debug.Log ("Foul ball, outside of bounds");
+					ballInPlay = false;
+					Destroy (ballInstance);
+				}
 			}
 			// if ball is not in play, set it to be in play and give it a shove
 			if (!ballInPlay) {
